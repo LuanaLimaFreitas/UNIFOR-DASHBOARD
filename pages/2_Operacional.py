@@ -53,11 +53,11 @@ st.markdown('## Dashboard Gerencial')
 col1, col2 = st.columns([1, 4])
 with col1:
     if empresa=='Hapvida': 
-        st.image("images/logo_hapvida.PNG")
+        st.image("images/logo_hapvida.png")
     if empresa=='Ibyte':       
-        st.image("images/logo_ibyte.PNG")
+        st.image("images/logo_ibyte.png")
     if empresa=='Nagem':       
-        st.image("images/logo_nagem.PNG")
+        st.image("images/logo_nagem.png")
  
 
 reclamacoes_local=df_local['reclamacoes'].sum()
