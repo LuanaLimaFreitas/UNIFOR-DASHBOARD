@@ -18,48 +18,79 @@ df = pd.concat([df_hapvida, df_ibyte, df_nagem])
 ## DATETIME ####
 df['TEMPO'] = pd.to_datetime(df['TEMPO'])
 df['UF'] = df['LOCAL'].str.extract(r'([A-Z]{2})')
-
-#### CALCULO DE FORTALEZA ###
+df['reclamacoes'] = 1
 
 
 #### STREAMLIT###
-st.title('ANALISE COVID')
-
-st.write('Esse dashboard é para a turma 4, 5 e 6')
-
-col1, col2 = st.columns(2)
-
-with col1:
-    empresa = st.selectbox(
+with st.sidebar:
+    #empresa = st.selectbox(
+    empresa = st.radio(
         'EMPRESA',
         df['empresa'].unique())
 
+df_local1=df[df['empresa'] == empresa]
+
+col1, col2 = st.columns([1, 5])
+
+with col1:
+    if empresa=='Hapvida': 
+        st.image("logo_hapvida-saude_8GHR9a.PNG")
+    if empresa=='Ibyte':       
+        st.image("logo_ibyte-loja-fisica_SO0yli.PNG")
+    if empresa=='Nagem':       
+        st.image("logo_nagem-loja-virtual_GFaJZ0.PNG")
+
 with col2:
-    uf = st.multiselect(
-        'UF', 
-        df['UF'].unique())
+    st.title('ReclameAQUI')    
 
 col3, col4 = st.columns(2)
 
 with col3:
+    uf = st.multiselect(
+        'UF', 
+        df_local1['UF'].unique())
+    
+with col4:
     status = st.multiselect(
         'STATUS', 
-        df['STATUS'].unique())
+        df_local1['STATUS'].unique())
 
-with col4:
-    texto = st.slider(
-        'Tamanho do texto ',
-        0.0, 100.0, (25.0, 75.0))
-    #st.write('Values:', texto)
+df_local2=df_local1
+if len(uf) > 0:
+    df_local2=df_local1[df_local1['UF'].isin(uf)]
+
+if len(status) == 0:
+    df_local=df_local2
+else:
+    df_local=df_local2[df_local2['STATUS'].isin(status)]
+
+
+reclamacoes_local=df_local['reclamacoes'].sum()
+df_respondidas = df_local[(df_local['STATUS'] == 'Resolvido') | (df_local['STATUS'] == 'Respondida')]
+respondidas_local=df_respondidas['reclamacoes'].sum()
+percentagem = respondidas_local / reclamacoes_local * 100
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Reclamações", "70 °F")
-col2.metric("Respondidas", "9 mph")
-col3.metric("% Respondidas", "86%")
+col1.metric("Reclamações", reclamacoes_local)
+col2.metric("Respondidas", respondidas_local)
+col3.metric("% Respondidas", "{:.2f}%".format(percentagem))
 
-contagem_uf = df['UF'].value_counts()
+
+status_unicos = df_local['STATUS'].value_counts()
+colunas = st.columns(len(status_unicos))
+for i, (valor, contagem) in enumerate(status_unicos.items()):
+    coluna = colunas[i]
+    coluna.metric(valor, contagem)  
+
+contagem_uf = df_local['UF'].value_counts()
 contagem_uf = contagem_uf.sort_values(ascending=True)
 st.bar_chart(contagem_uf)
 
-#serie_temporal = df.groupby([df['TEMPO']]).size().reset_index(name='reclamacoes')
-#st.line_chart(serie_temporal)
+#contagem_por_dia = df_local['TEMPO'].dt.date.value_counts().sort_index()
+#chart_data = pd.DataFrame({'TEMPO': contagem_por_dia.index, 'contagem': contagem_por_dia.values})
+#chart_data['TEMPO'] = pd.to_datetime(chart_data['TEMPO'])
+#st.line_chart(chart_data.set_index('TEMPO'))
+
+contagem_por_mes = df_local.groupby(df_local['TEMPO'].dt.to_period("M")).size().reset_index(name='contagem')
+contagem_por_mes['TEMPO'] = contagem_por_mes['TEMPO'].dt.to_timestamp()
+st.line_chart(contagem_por_mes.set_index('TEMPO'))
