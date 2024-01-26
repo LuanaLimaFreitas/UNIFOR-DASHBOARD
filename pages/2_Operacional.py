@@ -48,7 +48,7 @@ else:
     df_local=df_local2[df_local2['STATUS'].isin(status)]
 
 #### CABECALHO###
-st.markdown('## Dashboard Gerencial')
+st.markdown('## Dashboard Operacional')
 
 col1, col2 = st.columns([1, 4])
 with col1:
