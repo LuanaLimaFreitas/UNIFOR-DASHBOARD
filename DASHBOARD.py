@@ -38,7 +38,7 @@ with col1:
     if empresa=='Ibyte':       
         st.image("logo_ibyte-loja-fisica_SO0yli.png")
     if empresa=='Nagem':       
-        st.image("logo_nagem-loja-virtual_GFaJZ0.pnf")
+        st.image("logo_nagem-loja-virtual_GFaJZ0.png")
 
 with col2:
     st.title('ReclameAQUI')    
