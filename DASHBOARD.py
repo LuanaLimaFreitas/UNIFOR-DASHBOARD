@@ -34,11 +34,11 @@ col1, col2 = st.columns([1, 5])
 
 with col1:
     if empresa=='Hapvida': 
-        st.image("https://github.com/LuanaLimaFreitas/UNIFOR-DASHBOARD/blob/2e2aad02dbda123ef5303d63a07a8ac794f67ba8/logo_hapvida-saude_8GHR9a.PNG")
+        st.image("logo_hapvida-saude_8GHR9a.png")
     if empresa=='Ibyte':       
-        st.image("https://github.com/LuanaLimaFreitas/UNIFOR-DASHBOARD/blob/2e2aad02dbda123ef5303d63a07a8ac794f67ba8/logo_ibyte-loja-fisica_SO0yli.PNG")
+        st.image("logo_ibyte-loja-fisica_SO0yli.png")
     if empresa=='Nagem':       
-        st.image("https://github.com/LuanaLimaFreitas/UNIFOR-DASHBOARD/blob/2e2aad02dbda123ef5303d63a07a8ac794f67ba8/logo_nagem-loja-virtual_GFaJZ0.PNG")
+        st.image("logo_nagem-loja-virtual_GFaJZ0.pnf")
 
 with col2:
     st.title('ReclameAQUI')    
