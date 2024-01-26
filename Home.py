@@ -37,9 +37,9 @@ st.write(
 
 # Logo
 c1, c2, c3, c4, c5, c6, c7, c8, c9 = st.columns(9)
-c3.image("images/logo_hapvida.PNG")
-c5.image("images/logo_ibyte.PNG")
-c7.image("images/logo_nagem.PNG")
+c3.image("images/logo_hapvida.png")
+c5.image("images/logo_ibyte.png")
+c7.image("images/logo_nagem.png")
 
 # Introduction
 st.write(
